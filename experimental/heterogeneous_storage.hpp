@@ -1,0 +1,115 @@
+/*
+@copyright Louis Dionne 2015
+Distributed under the Boost Software License, Version 1.0.
+(See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
+ */
+
+#ifndef BOOST_HANA_EXPERIMENTAL_HETEROGENEOUS_STORAGE_HPP
+#define BOOST_HANA_EXPERIMENTAL_HETEROGENEOUS_STORAGE_HPP
+
+#include <cstddef>
+#include <new>
+#include <type_traits>
+
+#include <boost/hana/detail/array.hpp>
+
+
+namespace boost { namespace hana {
+    template <std::size_t n, typename ...T>
+    struct nth_type;
+
+    template <typename T, typename ...U>
+    struct nth_type<0, T, U...> {
+        using type = T;
+    };
+
+    template <std::size_t n, typename T, typename ...U>
+    struct nth_type<n, T, U...> {
+        using type = typename nth_type<n-1, U...>::type;
+    };
+
+    template <typename ...T>
+    struct heterogeneous_storage {
+    private:
+        static constexpr detail::array<std::size_t, sizeof...(T)> sizes = {{sizeof(T)...}};
+        static constexpr detail::array<std::size_t, sizeof...(T)> alignments = {{alignof(T)...}};
+
+        static constexpr detail::array<std::size_t, sizeof...(T)> offsets_impl() {
+            detail::array<std::size_t, sizeof...(T)> offsets{};
+            offsets[0] = sizes[0];
+            for (std::size_t i = 1; i < sizeof...(T); ++i) {
+                // Padd the current member so it is placed at an offset
+                // which is a multiple of its alignment.
+                offsets[i] = (offsets[i-1] % alignments[i]) + sizes[i];
+            }
+
+            return offsets;
+        }
+
+        static constexpr detail::array<std::size_t, sizeof...(T)> offsets = offsets_impl();
+
+        static constexpr std::size_t total_size = offsets[sizeof...(T)-1] + sizes[sizeof...(T)-1];
+
+        // TODO:
+        // We could compute an alignment requirement that might be smaller
+        // than the default one for std::aligned_storage.
+        typename std::aligned_storage<total_size>::type storage_;
+
+    public:
+        constexpr void* raw_nth(std::size_t n) {
+            if (n >= sizeof...(T))
+                throw "out of bounds access in a heterogeneous_storage";
+            return (&storage_) + offsets[n];
+        }
+
+        template <std::size_t n>
+        constexpr typename nth_type<n, T...>::type* nth() {
+            using Nth = typename nth_type<n, T...>::type;
+            return static_cast<Nth*>(this->raw_nth(n));
+        }
+
+        // Note: Placement-new can't be constexpr
+        template <typename ...Args>
+        explicit /* constexpr */ heterogeneous_storage(Args&& ...args) {
+            std::size_t i = 0;
+            void* expand[] = {
+                (::new (this->raw_nth(i++)) T(static_cast<Args&&>(args)))...
+            };
+            (void)expand;
+        }
+
+        ~heterogeneous_storage() {
+            std::size_t i = 0;
+            int expand[] = {
+                (static_cast<T*>(this->raw_nth(i++))->~T(), int{})...
+            };
+            (void)expand;
+        }
+    };
+
+    template <typename ...T>
+    constexpr detail::array<std::size_t, sizeof...(T)> heterogeneous_storage<T...>::offsets;
+
+    template <>
+    struct heterogeneous_storage<> {
+        constexpr heterogeneous_storage() { }
+
+        template <bool always_false = false>
+        constexpr auto raw_nth(std::size_t) {
+            static_assert(always_false,
+            "hana::heterogeneous_storage::raw_nth must not be called on an "
+            "empty heterogeneous_storage, because that would be an "
+            "out-of-bounds access");
+        }
+
+        template <std::size_t n, bool always_false = false>
+        constexpr auto nth() {
+            static_assert(always_false,
+            "hana::heterogeneous_storage::nth must not be called on an "
+            "empty heterogeneous_storage, because that would be an "
+            "out-of-bounds access");
+        }
+    };
+}} // end namespace boost::hana
+
+#endif // !BOOST_HANA_EXPERIMENTAL_HETEROGENEOUS_STORAGE_HPP

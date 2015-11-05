@@ -23,6 +23,13 @@
       "data": <%= time_compilation('compile.std.array.erb.cpp', hana) %>
     }
 
+    <% if false %>
+    , {
+      "name": "hana::experimental::heterogeneous_storage",
+      "data": <%= time_compilation('compile.hana.experimental.heterogeneous_storage.erb.cpp', hana) %>
+    }
+    <% end %>
+
     <% if not ("@CMAKE_CXX_COMPILER_ID@" == "Clang" &&
                "@CMAKE_CXX_COMPILER_VERSION@" == "3.5.0") %>
     , {
