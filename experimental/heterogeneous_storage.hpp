@@ -15,6 +15,8 @@ Distributed under the Boost Software License, Version 1.0.
 
 
 namespace boost { namespace hana {
+    struct uninitialized { };
+
     template <std::size_t n, typename ...T>
     struct nth_type;
 
@@ -62,27 +64,53 @@ namespace boost { namespace hana {
             return (&storage_) + offsets[n];
         }
 
+        constexpr void const* raw_nth(std::size_t n) const {
+            if (n >= sizeof...(T))
+                throw "out of bounds access in a heterogeneous_storage";
+            return (&storage_) + offsets[n];
+        }
+
         template <std::size_t n>
         constexpr typename nth_type<n, T...>::type* nth() {
             using Nth = typename nth_type<n, T...>::type;
             return static_cast<Nth*>(this->raw_nth(n));
         }
 
+        template <std::size_t n>
+        constexpr typename nth_type<n, T...>::type const* nth() const {
+            using Nth = typename nth_type<n, T...>::type;
+            return static_cast<Nth const*>(this->raw_nth(n));
+        }
+
+        explicit constexpr heterogeneous_storage(hana::uninitialized&&) { }
+        explicit constexpr heterogeneous_storage(hana::uninitialized const&) { }
+
         // Note: Placement-new can't be constexpr
-        template <typename ...Args>
-        explicit /* constexpr */ heterogeneous_storage(Args&& ...args) {
+        explicit /* constexpr */ heterogeneous_storage(T const& ...args) {
             std::size_t i = 0;
-            void* expand[] = {
-                (::new (this->raw_nth(i++)) T(static_cast<Args&&>(args)))...
+            void* expand[] = {::new (this->raw_nth(i++)) T(args)...};
+            (void)expand;
+        }
+
+        /* constexpr */ heterogeneous_storage(heterogeneous_storage const& other) {
+            std::size_t i = 0;
+            std::size_t expand[] = {
+                (::new (this->raw_nth(i)) T(*static_cast<T const*>(other.raw_nth(i))), ++i)...
+            };
+            (void)expand;
+        }
+
+        /* constexpr */ heterogeneous_storage(heterogeneous_storage&& other) {
+            std::size_t i = 0;
+            std::size_t expand[] = {
+                (::new (this->raw_nth(i)) T(static_cast<T&&>(*static_cast<T*>(other.raw_nth(i)))), ++i)...
             };
             (void)expand;
         }
 
         ~heterogeneous_storage() {
             std::size_t i = 0;
-            int expand[] = {
-                (static_cast<T*>(this->raw_nth(i++))->~T(), int{})...
-            };
+            int expand[] = {(static_cast<T*>(this->raw_nth(i++))->~T(), int{})...};
             (void)expand;
         }
     };
