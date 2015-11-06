@@ -38,11 +38,12 @@ namespace boost { namespace hana {
 
         static constexpr detail::array<std::size_t, sizeof...(T)> offsets_impl() {
             detail::array<std::size_t, sizeof...(T)> offsets{};
-            offsets[0] = sizes[0];
+            offsets[0] = 0;
             for (std::size_t i = 1; i < sizeof...(T); ++i) {
                 // Padd the current member so it is placed at an offset
                 // which is a multiple of its alignment.
-                offsets[i] = (offsets[i-1] % alignments[i]) + sizes[i];
+                offsets[i] = offsets[i-1] + sizes[i-1] +
+                             ((offsets[i-1] + sizes[i-1]) % alignments[i]);
             }
 
             return offsets;
