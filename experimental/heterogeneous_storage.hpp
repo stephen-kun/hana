@@ -85,6 +85,12 @@ namespace boost { namespace hana {
         explicit constexpr heterogeneous_storage(hana::uninitialized&&) { }
         explicit constexpr heterogeneous_storage(hana::uninitialized const&) { }
 
+        /* constexpr */ heterogeneous_storage() {
+            std::size_t i = 0;
+            void* expand[] = {::new (this->raw_nth(i++)) T()...};
+            (void)expand;
+        }
+
         // Note: Placement-new can't be constexpr
         explicit /* constexpr */ heterogeneous_storage(T const& ...args) {
             std::size_t i = 0;
