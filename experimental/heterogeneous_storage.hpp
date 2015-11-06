@@ -62,13 +62,13 @@ namespace boost { namespace hana {
         constexpr void* raw_nth(std::size_t n) {
             if (n >= sizeof...(T))
                 throw "out of bounds access in a heterogeneous_storage";
-            return (&storage_) + offsets[n];
+            return ((char*)&storage_) + offsets[n];
         }
 
         constexpr void const* raw_nth(std::size_t n) const {
             if (n >= sizeof...(T))
                 throw "out of bounds access in a heterogeneous_storage";
-            return (&storage_) + offsets[n];
+            return ((char const*)&storage_) + offsets[n];
         }
 
         template <std::size_t n>
