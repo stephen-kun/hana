@@ -1,0 +1,571 @@
+#include <boost/hana/map.hpp>
+#include <boost/hana/range.hpp>
+#include <vector>
+#include <array>
+namespace hana = boost::hana;
+using Vector = std::vector<int>;
+
+#ifdef USE_TUPLE
+
+template <int i>
+auto f() {
+  return hana::unpack(hana::range_c<int, 0, i>, [](auto ...x) {
+    return hana::make_tuple(hana::make_pair(x, Vector{})...);
+  });
+}
+
+#elif defined(USE_STRUCT)
+
+struct Foo {
+    hana::pair<hana::integral_constant<int, 0>,Vector> m0;
+    hana::pair<hana::integral_constant<int, 1>,Vector> m1;
+    hana::pair<hana::integral_constant<int, 2>,Vector> m2;
+    hana::pair<hana::integral_constant<int, 3>,Vector> m3;
+    hana::pair<hana::integral_constant<int, 4>,Vector> m4;
+    hana::pair<hana::integral_constant<int, 5>,Vector> m5;
+    hana::pair<hana::integral_constant<int, 6>,Vector> m6;
+    hana::pair<hana::integral_constant<int, 7>,Vector> m7;
+    hana::pair<hana::integral_constant<int, 8>,Vector> m8;
+    hana::pair<hana::integral_constant<int, 9>,Vector> m9;
+    hana::pair<hana::integral_constant<int, 10>,Vector> m10;
+    hana::pair<hana::integral_constant<int, 11>,Vector> m11;
+    hana::pair<hana::integral_constant<int, 12>,Vector> m12;
+    hana::pair<hana::integral_constant<int, 13>,Vector> m13;
+    hana::pair<hana::integral_constant<int, 14>,Vector> m14;
+    hana::pair<hana::integral_constant<int, 15>,Vector> m15;
+    hana::pair<hana::integral_constant<int, 16>,Vector> m16;
+    hana::pair<hana::integral_constant<int, 17>,Vector> m17;
+    hana::pair<hana::integral_constant<int, 18>,Vector> m18;
+    hana::pair<hana::integral_constant<int, 19>,Vector> m19;
+    hana::pair<hana::integral_constant<int, 20>,Vector> m20;
+    hana::pair<hana::integral_constant<int, 21>,Vector> m21;
+    hana::pair<hana::integral_constant<int, 22>,Vector> m22;
+    hana::pair<hana::integral_constant<int, 23>,Vector> m23;
+    hana::pair<hana::integral_constant<int, 24>,Vector> m24;
+    hana::pair<hana::integral_constant<int, 25>,Vector> m25;
+    hana::pair<hana::integral_constant<int, 26>,Vector> m26;
+    hana::pair<hana::integral_constant<int, 27>,Vector> m27;
+    hana::pair<hana::integral_constant<int, 28>,Vector> m28;
+    hana::pair<hana::integral_constant<int, 29>,Vector> m29;
+    hana::pair<hana::integral_constant<int, 30>,Vector> m30;
+    hana::pair<hana::integral_constant<int, 31>,Vector> m31;
+    hana::pair<hana::integral_constant<int, 32>,Vector> m32;
+    hana::pair<hana::integral_constant<int, 33>,Vector> m33;
+    hana::pair<hana::integral_constant<int, 34>,Vector> m34;
+    hana::pair<hana::integral_constant<int, 35>,Vector> m35;
+    hana::pair<hana::integral_constant<int, 36>,Vector> m36;
+    hana::pair<hana::integral_constant<int, 37>,Vector> m37;
+    hana::pair<hana::integral_constant<int, 38>,Vector> m38;
+    hana::pair<hana::integral_constant<int, 39>,Vector> m39;
+    hana::pair<hana::integral_constant<int, 40>,Vector> m40;
+    hana::pair<hana::integral_constant<int, 41>,Vector> m41;
+    hana::pair<hana::integral_constant<int, 42>,Vector> m42;
+    hana::pair<hana::integral_constant<int, 43>,Vector> m43;
+    hana::pair<hana::integral_constant<int, 44>,Vector> m44;
+    hana::pair<hana::integral_constant<int, 45>,Vector> m45;
+    hana::pair<hana::integral_constant<int, 46>,Vector> m46;
+    hana::pair<hana::integral_constant<int, 47>,Vector> m47;
+    hana::pair<hana::integral_constant<int, 48>,Vector> m48;
+    hana::pair<hana::integral_constant<int, 49>,Vector> m49;
+    hana::pair<hana::integral_constant<int, 50>,Vector> m50;
+    hana::pair<hana::integral_constant<int, 51>,Vector> m51;
+    hana::pair<hana::integral_constant<int, 52>,Vector> m52;
+    hana::pair<hana::integral_constant<int, 53>,Vector> m53;
+    hana::pair<hana::integral_constant<int, 54>,Vector> m54;
+    hana::pair<hana::integral_constant<int, 55>,Vector> m55;
+    hana::pair<hana::integral_constant<int, 56>,Vector> m56;
+    hana::pair<hana::integral_constant<int, 57>,Vector> m57;
+    hana::pair<hana::integral_constant<int, 58>,Vector> m58;
+    hana::pair<hana::integral_constant<int, 59>,Vector> m59;
+    hana::pair<hana::integral_constant<int, 60>,Vector> m60;
+    hana::pair<hana::integral_constant<int, 61>,Vector> m61;
+    hana::pair<hana::integral_constant<int, 62>,Vector> m62;
+    hana::pair<hana::integral_constant<int, 63>,Vector> m63;
+    hana::pair<hana::integral_constant<int, 64>,Vector> m64;
+    hana::pair<hana::integral_constant<int, 65>,Vector> m65;
+    hana::pair<hana::integral_constant<int, 66>,Vector> m66;
+    hana::pair<hana::integral_constant<int, 67>,Vector> m67;
+    hana::pair<hana::integral_constant<int, 68>,Vector> m68;
+    hana::pair<hana::integral_constant<int, 69>,Vector> m69;
+    hana::pair<hana::integral_constant<int, 70>,Vector> m70;
+    hana::pair<hana::integral_constant<int, 71>,Vector> m71;
+    hana::pair<hana::integral_constant<int, 72>,Vector> m72;
+    hana::pair<hana::integral_constant<int, 73>,Vector> m73;
+    hana::pair<hana::integral_constant<int, 74>,Vector> m74;
+    hana::pair<hana::integral_constant<int, 75>,Vector> m75;
+    hana::pair<hana::integral_constant<int, 76>,Vector> m76;
+    hana::pair<hana::integral_constant<int, 77>,Vector> m77;
+    hana::pair<hana::integral_constant<int, 78>,Vector> m78;
+    hana::pair<hana::integral_constant<int, 79>,Vector> m79;
+    hana::pair<hana::integral_constant<int, 80>,Vector> m80;
+    hana::pair<hana::integral_constant<int, 81>,Vector> m81;
+    hana::pair<hana::integral_constant<int, 82>,Vector> m82;
+    hana::pair<hana::integral_constant<int, 83>,Vector> m83;
+    hana::pair<hana::integral_constant<int, 84>,Vector> m84;
+    hana::pair<hana::integral_constant<int, 85>,Vector> m85;
+    hana::pair<hana::integral_constant<int, 86>,Vector> m86;
+    hana::pair<hana::integral_constant<int, 87>,Vector> m87;
+    hana::pair<hana::integral_constant<int, 88>,Vector> m88;
+    hana::pair<hana::integral_constant<int, 89>,Vector> m89;
+    hana::pair<hana::integral_constant<int, 90>,Vector> m90;
+    hana::pair<hana::integral_constant<int, 91>,Vector> m91;
+    hana::pair<hana::integral_constant<int, 92>,Vector> m92;
+    hana::pair<hana::integral_constant<int, 93>,Vector> m93;
+    hana::pair<hana::integral_constant<int, 94>,Vector> m94;
+    hana::pair<hana::integral_constant<int, 95>,Vector> m95;
+    hana::pair<hana::integral_constant<int, 96>,Vector> m96;
+    hana::pair<hana::integral_constant<int, 97>,Vector> m97;
+    hana::pair<hana::integral_constant<int, 98>,Vector> m98;
+    hana::pair<hana::integral_constant<int, 99>,Vector> m99;
+    hana::pair<hana::integral_constant<int, 100>,Vector> m100;
+    hana::pair<hana::integral_constant<int, 101>,Vector> m101;
+    hana::pair<hana::integral_constant<int, 102>,Vector> m102;
+    hana::pair<hana::integral_constant<int, 103>,Vector> m103;
+    hana::pair<hana::integral_constant<int, 104>,Vector> m104;
+    hana::pair<hana::integral_constant<int, 105>,Vector> m105;
+    hana::pair<hana::integral_constant<int, 106>,Vector> m106;
+    hana::pair<hana::integral_constant<int, 107>,Vector> m107;
+    hana::pair<hana::integral_constant<int, 108>,Vector> m108;
+    hana::pair<hana::integral_constant<int, 109>,Vector> m109;
+    hana::pair<hana::integral_constant<int, 110>,Vector> m110;
+    hana::pair<hana::integral_constant<int, 111>,Vector> m111;
+    hana::pair<hana::integral_constant<int, 112>,Vector> m112;
+    hana::pair<hana::integral_constant<int, 113>,Vector> m113;
+    hana::pair<hana::integral_constant<int, 114>,Vector> m114;
+    hana::pair<hana::integral_constant<int, 115>,Vector> m115;
+    hana::pair<hana::integral_constant<int, 116>,Vector> m116;
+    hana::pair<hana::integral_constant<int, 117>,Vector> m117;
+    hana::pair<hana::integral_constant<int, 118>,Vector> m118;
+    hana::pair<hana::integral_constant<int, 119>,Vector> m119;
+    hana::pair<hana::integral_constant<int, 120>,Vector> m120;
+    hana::pair<hana::integral_constant<int, 121>,Vector> m121;
+    hana::pair<hana::integral_constant<int, 122>,Vector> m122;
+    hana::pair<hana::integral_constant<int, 123>,Vector> m123;
+    hana::pair<hana::integral_constant<int, 124>,Vector> m124;
+    hana::pair<hana::integral_constant<int, 125>,Vector> m125;
+    hana::pair<hana::integral_constant<int, 126>,Vector> m126;
+    hana::pair<hana::integral_constant<int, 127>,Vector> m127;
+    hana::pair<hana::integral_constant<int, 128>,Vector> m128;
+    hana::pair<hana::integral_constant<int, 129>,Vector> m129;
+    hana::pair<hana::integral_constant<int, 130>,Vector> m130;
+    hana::pair<hana::integral_constant<int, 131>,Vector> m131;
+    hana::pair<hana::integral_constant<int, 132>,Vector> m132;
+    hana::pair<hana::integral_constant<int, 133>,Vector> m133;
+    hana::pair<hana::integral_constant<int, 134>,Vector> m134;
+    hana::pair<hana::integral_constant<int, 135>,Vector> m135;
+    hana::pair<hana::integral_constant<int, 136>,Vector> m136;
+    hana::pair<hana::integral_constant<int, 137>,Vector> m137;
+    hana::pair<hana::integral_constant<int, 138>,Vector> m138;
+    hana::pair<hana::integral_constant<int, 139>,Vector> m139;
+    hana::pair<hana::integral_constant<int, 140>,Vector> m140;
+    hana::pair<hana::integral_constant<int, 141>,Vector> m141;
+    hana::pair<hana::integral_constant<int, 142>,Vector> m142;
+    hana::pair<hana::integral_constant<int, 143>,Vector> m143;
+    hana::pair<hana::integral_constant<int, 144>,Vector> m144;
+    hana::pair<hana::integral_constant<int, 145>,Vector> m145;
+    hana::pair<hana::integral_constant<int, 146>,Vector> m146;
+    hana::pair<hana::integral_constant<int, 147>,Vector> m147;
+    hana::pair<hana::integral_constant<int, 148>,Vector> m148;
+    hana::pair<hana::integral_constant<int, 149>,Vector> m149;
+    hana::pair<hana::integral_constant<int, 150>,Vector> m150;
+    hana::pair<hana::integral_constant<int, 151>,Vector> m151;
+    hana::pair<hana::integral_constant<int, 152>,Vector> m152;
+    hana::pair<hana::integral_constant<int, 153>,Vector> m153;
+    hana::pair<hana::integral_constant<int, 154>,Vector> m154;
+    hana::pair<hana::integral_constant<int, 155>,Vector> m155;
+    hana::pair<hana::integral_constant<int, 156>,Vector> m156;
+    hana::pair<hana::integral_constant<int, 157>,Vector> m157;
+    hana::pair<hana::integral_constant<int, 158>,Vector> m158;
+    hana::pair<hana::integral_constant<int, 159>,Vector> m159;
+    hana::pair<hana::integral_constant<int, 160>,Vector> m160;
+    hana::pair<hana::integral_constant<int, 161>,Vector> m161;
+    hana::pair<hana::integral_constant<int, 162>,Vector> m162;
+    hana::pair<hana::integral_constant<int, 163>,Vector> m163;
+    hana::pair<hana::integral_constant<int, 164>,Vector> m164;
+    hana::pair<hana::integral_constant<int, 165>,Vector> m165;
+    hana::pair<hana::integral_constant<int, 166>,Vector> m166;
+    hana::pair<hana::integral_constant<int, 167>,Vector> m167;
+    hana::pair<hana::integral_constant<int, 168>,Vector> m168;
+    hana::pair<hana::integral_constant<int, 169>,Vector> m169;
+    hana::pair<hana::integral_constant<int, 170>,Vector> m170;
+    hana::pair<hana::integral_constant<int, 171>,Vector> m171;
+    hana::pair<hana::integral_constant<int, 172>,Vector> m172;
+    hana::pair<hana::integral_constant<int, 173>,Vector> m173;
+    hana::pair<hana::integral_constant<int, 174>,Vector> m174;
+    hana::pair<hana::integral_constant<int, 175>,Vector> m175;
+    hana::pair<hana::integral_constant<int, 176>,Vector> m176;
+    hana::pair<hana::integral_constant<int, 177>,Vector> m177;
+    hana::pair<hana::integral_constant<int, 178>,Vector> m178;
+    hana::pair<hana::integral_constant<int, 179>,Vector> m179;
+    hana::pair<hana::integral_constant<int, 180>,Vector> m180;
+    hana::pair<hana::integral_constant<int, 181>,Vector> m181;
+    hana::pair<hana::integral_constant<int, 182>,Vector> m182;
+    hana::pair<hana::integral_constant<int, 183>,Vector> m183;
+    hana::pair<hana::integral_constant<int, 184>,Vector> m184;
+    hana::pair<hana::integral_constant<int, 185>,Vector> m185;
+    hana::pair<hana::integral_constant<int, 186>,Vector> m186;
+    hana::pair<hana::integral_constant<int, 187>,Vector> m187;
+    hana::pair<hana::integral_constant<int, 188>,Vector> m188;
+    hana::pair<hana::integral_constant<int, 189>,Vector> m189;
+    hana::pair<hana::integral_constant<int, 190>,Vector> m190;
+    hana::pair<hana::integral_constant<int, 191>,Vector> m191;
+    hana::pair<hana::integral_constant<int, 192>,Vector> m192;
+    hana::pair<hana::integral_constant<int, 193>,Vector> m193;
+    hana::pair<hana::integral_constant<int, 194>,Vector> m194;
+    hana::pair<hana::integral_constant<int, 195>,Vector> m195;
+    hana::pair<hana::integral_constant<int, 196>,Vector> m196;
+    hana::pair<hana::integral_constant<int, 197>,Vector> m197;
+    hana::pair<hana::integral_constant<int, 198>,Vector> m198;
+    hana::pair<hana::integral_constant<int, 199>,Vector> m199;
+    hana::pair<hana::integral_constant<int, 200>,Vector> m200;
+    hana::pair<hana::integral_constant<int, 201>,Vector> m201;
+    hana::pair<hana::integral_constant<int, 202>,Vector> m202;
+    hana::pair<hana::integral_constant<int, 203>,Vector> m203;
+    hana::pair<hana::integral_constant<int, 204>,Vector> m204;
+    hana::pair<hana::integral_constant<int, 205>,Vector> m205;
+    hana::pair<hana::integral_constant<int, 206>,Vector> m206;
+    hana::pair<hana::integral_constant<int, 207>,Vector> m207;
+    hana::pair<hana::integral_constant<int, 208>,Vector> m208;
+    hana::pair<hana::integral_constant<int, 209>,Vector> m209;
+    hana::pair<hana::integral_constant<int, 210>,Vector> m210;
+    hana::pair<hana::integral_constant<int, 211>,Vector> m211;
+    hana::pair<hana::integral_constant<int, 212>,Vector> m212;
+    hana::pair<hana::integral_constant<int, 213>,Vector> m213;
+    hana::pair<hana::integral_constant<int, 214>,Vector> m214;
+    hana::pair<hana::integral_constant<int, 215>,Vector> m215;
+    hana::pair<hana::integral_constant<int, 216>,Vector> m216;
+    hana::pair<hana::integral_constant<int, 217>,Vector> m217;
+    hana::pair<hana::integral_constant<int, 218>,Vector> m218;
+    hana::pair<hana::integral_constant<int, 219>,Vector> m219;
+    hana::pair<hana::integral_constant<int, 220>,Vector> m220;
+    hana::pair<hana::integral_constant<int, 221>,Vector> m221;
+    hana::pair<hana::integral_constant<int, 222>,Vector> m222;
+    hana::pair<hana::integral_constant<int, 223>,Vector> m223;
+    hana::pair<hana::integral_constant<int, 224>,Vector> m224;
+    hana::pair<hana::integral_constant<int, 225>,Vector> m225;
+    hana::pair<hana::integral_constant<int, 226>,Vector> m226;
+    hana::pair<hana::integral_constant<int, 227>,Vector> m227;
+    hana::pair<hana::integral_constant<int, 228>,Vector> m228;
+    hana::pair<hana::integral_constant<int, 229>,Vector> m229;
+    hana::pair<hana::integral_constant<int, 230>,Vector> m230;
+    hana::pair<hana::integral_constant<int, 231>,Vector> m231;
+    hana::pair<hana::integral_constant<int, 232>,Vector> m232;
+    hana::pair<hana::integral_constant<int, 233>,Vector> m233;
+    hana::pair<hana::integral_constant<int, 234>,Vector> m234;
+    hana::pair<hana::integral_constant<int, 235>,Vector> m235;
+    hana::pair<hana::integral_constant<int, 236>,Vector> m236;
+    hana::pair<hana::integral_constant<int, 237>,Vector> m237;
+    hana::pair<hana::integral_constant<int, 238>,Vector> m238;
+    hana::pair<hana::integral_constant<int, 239>,Vector> m239;
+    hana::pair<hana::integral_constant<int, 240>,Vector> m240;
+    hana::pair<hana::integral_constant<int, 241>,Vector> m241;
+    hana::pair<hana::integral_constant<int, 242>,Vector> m242;
+    hana::pair<hana::integral_constant<int, 243>,Vector> m243;
+    hana::pair<hana::integral_constant<int, 244>,Vector> m244;
+    hana::pair<hana::integral_constant<int, 245>,Vector> m245;
+    hana::pair<hana::integral_constant<int, 246>,Vector> m246;
+    hana::pair<hana::integral_constant<int, 247>,Vector> m247;
+    hana::pair<hana::integral_constant<int, 248>,Vector> m248;
+    hana::pair<hana::integral_constant<int, 249>,Vector> m249;
+    hana::pair<hana::integral_constant<int, 250>,Vector> m250;
+    hana::pair<hana::integral_constant<int, 251>,Vector> m251;
+    hana::pair<hana::integral_constant<int, 252>,Vector> m252;
+    hana::pair<hana::integral_constant<int, 253>,Vector> m253;
+    hana::pair<hana::integral_constant<int, 254>,Vector> m254;
+    hana::pair<hana::integral_constant<int, 255>,Vector> m255;
+    hana::pair<hana::integral_constant<int, 256>,Vector> m256;
+    hana::pair<hana::integral_constant<int, 257>,Vector> m257;
+    hana::pair<hana::integral_constant<int, 258>,Vector> m258;
+    hana::pair<hana::integral_constant<int, 259>,Vector> m259;
+    hana::pair<hana::integral_constant<int, 260>,Vector> m260;
+    hana::pair<hana::integral_constant<int, 261>,Vector> m261;
+    hana::pair<hana::integral_constant<int, 262>,Vector> m262;
+    hana::pair<hana::integral_constant<int, 263>,Vector> m263;
+    hana::pair<hana::integral_constant<int, 264>,Vector> m264;
+    hana::pair<hana::integral_constant<int, 265>,Vector> m265;
+    hana::pair<hana::integral_constant<int, 266>,Vector> m266;
+    hana::pair<hana::integral_constant<int, 267>,Vector> m267;
+    hana::pair<hana::integral_constant<int, 268>,Vector> m268;
+    hana::pair<hana::integral_constant<int, 269>,Vector> m269;
+    hana::pair<hana::integral_constant<int, 270>,Vector> m270;
+    hana::pair<hana::integral_constant<int, 271>,Vector> m271;
+    hana::pair<hana::integral_constant<int, 272>,Vector> m272;
+    hana::pair<hana::integral_constant<int, 273>,Vector> m273;
+    hana::pair<hana::integral_constant<int, 274>,Vector> m274;
+    hana::pair<hana::integral_constant<int, 275>,Vector> m275;
+    hana::pair<hana::integral_constant<int, 276>,Vector> m276;
+    hana::pair<hana::integral_constant<int, 277>,Vector> m277;
+    hana::pair<hana::integral_constant<int, 278>,Vector> m278;
+    hana::pair<hana::integral_constant<int, 279>,Vector> m279;
+    hana::pair<hana::integral_constant<int, 280>,Vector> m280;
+    hana::pair<hana::integral_constant<int, 281>,Vector> m281;
+    hana::pair<hana::integral_constant<int, 282>,Vector> m282;
+    hana::pair<hana::integral_constant<int, 283>,Vector> m283;
+    hana::pair<hana::integral_constant<int, 284>,Vector> m284;
+    hana::pair<hana::integral_constant<int, 285>,Vector> m285;
+    hana::pair<hana::integral_constant<int, 286>,Vector> m286;
+    hana::pair<hana::integral_constant<int, 287>,Vector> m287;
+    hana::pair<hana::integral_constant<int, 288>,Vector> m288;
+    hana::pair<hana::integral_constant<int, 289>,Vector> m289;
+    hana::pair<hana::integral_constant<int, 290>,Vector> m290;
+    hana::pair<hana::integral_constant<int, 291>,Vector> m291;
+    hana::pair<hana::integral_constant<int, 292>,Vector> m292;
+    hana::pair<hana::integral_constant<int, 293>,Vector> m293;
+    hana::pair<hana::integral_constant<int, 294>,Vector> m294;
+    hana::pair<hana::integral_constant<int, 295>,Vector> m295;
+    hana::pair<hana::integral_constant<int, 296>,Vector> m296;
+    hana::pair<hana::integral_constant<int, 297>,Vector> m297;
+    hana::pair<hana::integral_constant<int, 298>,Vector> m298;
+    hana::pair<hana::integral_constant<int, 299>,Vector> m299;
+    hana::pair<hana::integral_constant<int, 300>,Vector> m300;
+    hana::pair<hana::integral_constant<int, 301>,Vector> m301;
+    hana::pair<hana::integral_constant<int, 302>,Vector> m302;
+    hana::pair<hana::integral_constant<int, 303>,Vector> m303;
+    hana::pair<hana::integral_constant<int, 304>,Vector> m304;
+    hana::pair<hana::integral_constant<int, 305>,Vector> m305;
+    hana::pair<hana::integral_constant<int, 306>,Vector> m306;
+    hana::pair<hana::integral_constant<int, 307>,Vector> m307;
+    hana::pair<hana::integral_constant<int, 308>,Vector> m308;
+    hana::pair<hana::integral_constant<int, 309>,Vector> m309;
+    hana::pair<hana::integral_constant<int, 310>,Vector> m310;
+    hana::pair<hana::integral_constant<int, 311>,Vector> m311;
+    hana::pair<hana::integral_constant<int, 312>,Vector> m312;
+    hana::pair<hana::integral_constant<int, 313>,Vector> m313;
+    hana::pair<hana::integral_constant<int, 314>,Vector> m314;
+    hana::pair<hana::integral_constant<int, 315>,Vector> m315;
+    hana::pair<hana::integral_constant<int, 316>,Vector> m316;
+    hana::pair<hana::integral_constant<int, 317>,Vector> m317;
+    hana::pair<hana::integral_constant<int, 318>,Vector> m318;
+    hana::pair<hana::integral_constant<int, 319>,Vector> m319;
+    hana::pair<hana::integral_constant<int, 320>,Vector> m320;
+    hana::pair<hana::integral_constant<int, 321>,Vector> m321;
+    hana::pair<hana::integral_constant<int, 322>,Vector> m322;
+    hana::pair<hana::integral_constant<int, 323>,Vector> m323;
+    hana::pair<hana::integral_constant<int, 324>,Vector> m324;
+    hana::pair<hana::integral_constant<int, 325>,Vector> m325;
+    hana::pair<hana::integral_constant<int, 326>,Vector> m326;
+    hana::pair<hana::integral_constant<int, 327>,Vector> m327;
+    hana::pair<hana::integral_constant<int, 328>,Vector> m328;
+    hana::pair<hana::integral_constant<int, 329>,Vector> m329;
+    hana::pair<hana::integral_constant<int, 330>,Vector> m330;
+    hana::pair<hana::integral_constant<int, 331>,Vector> m331;
+    hana::pair<hana::integral_constant<int, 332>,Vector> m332;
+    hana::pair<hana::integral_constant<int, 333>,Vector> m333;
+    hana::pair<hana::integral_constant<int, 334>,Vector> m334;
+    hana::pair<hana::integral_constant<int, 335>,Vector> m335;
+    hana::pair<hana::integral_constant<int, 336>,Vector> m336;
+    hana::pair<hana::integral_constant<int, 337>,Vector> m337;
+    hana::pair<hana::integral_constant<int, 338>,Vector> m338;
+    hana::pair<hana::integral_constant<int, 339>,Vector> m339;
+    hana::pair<hana::integral_constant<int, 340>,Vector> m340;
+    hana::pair<hana::integral_constant<int, 341>,Vector> m341;
+    hana::pair<hana::integral_constant<int, 342>,Vector> m342;
+    hana::pair<hana::integral_constant<int, 343>,Vector> m343;
+    hana::pair<hana::integral_constant<int, 344>,Vector> m344;
+    hana::pair<hana::integral_constant<int, 345>,Vector> m345;
+    hana::pair<hana::integral_constant<int, 346>,Vector> m346;
+    hana::pair<hana::integral_constant<int, 347>,Vector> m347;
+    hana::pair<hana::integral_constant<int, 348>,Vector> m348;
+    hana::pair<hana::integral_constant<int, 349>,Vector> m349;
+    hana::pair<hana::integral_constant<int, 350>,Vector> m350;
+    hana::pair<hana::integral_constant<int, 351>,Vector> m351;
+    hana::pair<hana::integral_constant<int, 352>,Vector> m352;
+    hana::pair<hana::integral_constant<int, 353>,Vector> m353;
+    hana::pair<hana::integral_constant<int, 354>,Vector> m354;
+    hana::pair<hana::integral_constant<int, 355>,Vector> m355;
+    hana::pair<hana::integral_constant<int, 356>,Vector> m356;
+    hana::pair<hana::integral_constant<int, 357>,Vector> m357;
+    hana::pair<hana::integral_constant<int, 358>,Vector> m358;
+    hana::pair<hana::integral_constant<int, 359>,Vector> m359;
+    hana::pair<hana::integral_constant<int, 360>,Vector> m360;
+    hana::pair<hana::integral_constant<int, 361>,Vector> m361;
+    hana::pair<hana::integral_constant<int, 362>,Vector> m362;
+    hana::pair<hana::integral_constant<int, 363>,Vector> m363;
+    hana::pair<hana::integral_constant<int, 364>,Vector> m364;
+    hana::pair<hana::integral_constant<int, 365>,Vector> m365;
+    hana::pair<hana::integral_constant<int, 366>,Vector> m366;
+    hana::pair<hana::integral_constant<int, 367>,Vector> m367;
+    hana::pair<hana::integral_constant<int, 368>,Vector> m368;
+    hana::pair<hana::integral_constant<int, 369>,Vector> m369;
+    hana::pair<hana::integral_constant<int, 370>,Vector> m370;
+    hana::pair<hana::integral_constant<int, 371>,Vector> m371;
+    hana::pair<hana::integral_constant<int, 372>,Vector> m372;
+    hana::pair<hana::integral_constant<int, 373>,Vector> m373;
+    hana::pair<hana::integral_constant<int, 374>,Vector> m374;
+    hana::pair<hana::integral_constant<int, 375>,Vector> m375;
+    hana::pair<hana::integral_constant<int, 376>,Vector> m376;
+    hana::pair<hana::integral_constant<int, 377>,Vector> m377;
+    hana::pair<hana::integral_constant<int, 378>,Vector> m378;
+    hana::pair<hana::integral_constant<int, 379>,Vector> m379;
+    hana::pair<hana::integral_constant<int, 380>,Vector> m380;
+    hana::pair<hana::integral_constant<int, 381>,Vector> m381;
+    hana::pair<hana::integral_constant<int, 382>,Vector> m382;
+    hana::pair<hana::integral_constant<int, 383>,Vector> m383;
+    hana::pair<hana::integral_constant<int, 384>,Vector> m384;
+    hana::pair<hana::integral_constant<int, 385>,Vector> m385;
+    hana::pair<hana::integral_constant<int, 386>,Vector> m386;
+    hana::pair<hana::integral_constant<int, 387>,Vector> m387;
+    hana::pair<hana::integral_constant<int, 388>,Vector> m388;
+    hana::pair<hana::integral_constant<int, 389>,Vector> m389;
+    hana::pair<hana::integral_constant<int, 390>,Vector> m390;
+    hana::pair<hana::integral_constant<int, 391>,Vector> m391;
+    hana::pair<hana::integral_constant<int, 392>,Vector> m392;
+    hana::pair<hana::integral_constant<int, 393>,Vector> m393;
+    hana::pair<hana::integral_constant<int, 394>,Vector> m394;
+    hana::pair<hana::integral_constant<int, 395>,Vector> m395;
+    hana::pair<hana::integral_constant<int, 396>,Vector> m396;
+    hana::pair<hana::integral_constant<int, 397>,Vector> m397;
+    hana::pair<hana::integral_constant<int, 398>,Vector> m398;
+    hana::pair<hana::integral_constant<int, 399>,Vector> m399;
+    hana::pair<hana::integral_constant<int, 400>,Vector> m400;
+    hana::pair<hana::integral_constant<int, 401>,Vector> m401;
+    hana::pair<hana::integral_constant<int, 402>,Vector> m402;
+    hana::pair<hana::integral_constant<int, 403>,Vector> m403;
+    hana::pair<hana::integral_constant<int, 404>,Vector> m404;
+    hana::pair<hana::integral_constant<int, 405>,Vector> m405;
+    hana::pair<hana::integral_constant<int, 406>,Vector> m406;
+    hana::pair<hana::integral_constant<int, 407>,Vector> m407;
+    hana::pair<hana::integral_constant<int, 408>,Vector> m408;
+    hana::pair<hana::integral_constant<int, 409>,Vector> m409;
+    hana::pair<hana::integral_constant<int, 410>,Vector> m410;
+    hana::pair<hana::integral_constant<int, 411>,Vector> m411;
+    hana::pair<hana::integral_constant<int, 412>,Vector> m412;
+    hana::pair<hana::integral_constant<int, 413>,Vector> m413;
+    hana::pair<hana::integral_constant<int, 414>,Vector> m414;
+    hana::pair<hana::integral_constant<int, 415>,Vector> m415;
+    hana::pair<hana::integral_constant<int, 416>,Vector> m416;
+    hana::pair<hana::integral_constant<int, 417>,Vector> m417;
+    hana::pair<hana::integral_constant<int, 418>,Vector> m418;
+    hana::pair<hana::integral_constant<int, 419>,Vector> m419;
+    hana::pair<hana::integral_constant<int, 420>,Vector> m420;
+    hana::pair<hana::integral_constant<int, 421>,Vector> m421;
+    hana::pair<hana::integral_constant<int, 422>,Vector> m422;
+    hana::pair<hana::integral_constant<int, 423>,Vector> m423;
+    hana::pair<hana::integral_constant<int, 424>,Vector> m424;
+    hana::pair<hana::integral_constant<int, 425>,Vector> m425;
+    hana::pair<hana::integral_constant<int, 426>,Vector> m426;
+    hana::pair<hana::integral_constant<int, 427>,Vector> m427;
+    hana::pair<hana::integral_constant<int, 428>,Vector> m428;
+    hana::pair<hana::integral_constant<int, 429>,Vector> m429;
+    hana::pair<hana::integral_constant<int, 430>,Vector> m430;
+    hana::pair<hana::integral_constant<int, 431>,Vector> m431;
+    hana::pair<hana::integral_constant<int, 432>,Vector> m432;
+    hana::pair<hana::integral_constant<int, 433>,Vector> m433;
+    hana::pair<hana::integral_constant<int, 434>,Vector> m434;
+    hana::pair<hana::integral_constant<int, 435>,Vector> m435;
+    hana::pair<hana::integral_constant<int, 436>,Vector> m436;
+    hana::pair<hana::integral_constant<int, 437>,Vector> m437;
+    hana::pair<hana::integral_constant<int, 438>,Vector> m438;
+    hana::pair<hana::integral_constant<int, 439>,Vector> m439;
+    hana::pair<hana::integral_constant<int, 440>,Vector> m440;
+    hana::pair<hana::integral_constant<int, 441>,Vector> m441;
+    hana::pair<hana::integral_constant<int, 442>,Vector> m442;
+    hana::pair<hana::integral_constant<int, 443>,Vector> m443;
+    hana::pair<hana::integral_constant<int, 444>,Vector> m444;
+    hana::pair<hana::integral_constant<int, 445>,Vector> m445;
+    hana::pair<hana::integral_constant<int, 446>,Vector> m446;
+    hana::pair<hana::integral_constant<int, 447>,Vector> m447;
+    hana::pair<hana::integral_constant<int, 448>,Vector> m448;
+    hana::pair<hana::integral_constant<int, 449>,Vector> m449;
+    hana::pair<hana::integral_constant<int, 450>,Vector> m450;
+    hana::pair<hana::integral_constant<int, 451>,Vector> m451;
+    hana::pair<hana::integral_constant<int, 452>,Vector> m452;
+    hana::pair<hana::integral_constant<int, 453>,Vector> m453;
+    hana::pair<hana::integral_constant<int, 454>,Vector> m454;
+    hana::pair<hana::integral_constant<int, 455>,Vector> m455;
+    hana::pair<hana::integral_constant<int, 456>,Vector> m456;
+    hana::pair<hana::integral_constant<int, 457>,Vector> m457;
+    hana::pair<hana::integral_constant<int, 458>,Vector> m458;
+    hana::pair<hana::integral_constant<int, 459>,Vector> m459;
+    hana::pair<hana::integral_constant<int, 460>,Vector> m460;
+    hana::pair<hana::integral_constant<int, 461>,Vector> m461;
+    hana::pair<hana::integral_constant<int, 462>,Vector> m462;
+    hana::pair<hana::integral_constant<int, 463>,Vector> m463;
+    hana::pair<hana::integral_constant<int, 464>,Vector> m464;
+    hana::pair<hana::integral_constant<int, 465>,Vector> m465;
+    hana::pair<hana::integral_constant<int, 466>,Vector> m466;
+    hana::pair<hana::integral_constant<int, 467>,Vector> m467;
+    hana::pair<hana::integral_constant<int, 468>,Vector> m468;
+    hana::pair<hana::integral_constant<int, 469>,Vector> m469;
+    hana::pair<hana::integral_constant<int, 470>,Vector> m470;
+    hana::pair<hana::integral_constant<int, 471>,Vector> m471;
+    hana::pair<hana::integral_constant<int, 472>,Vector> m472;
+    hana::pair<hana::integral_constant<int, 473>,Vector> m473;
+    hana::pair<hana::integral_constant<int, 474>,Vector> m474;
+    hana::pair<hana::integral_constant<int, 475>,Vector> m475;
+    hana::pair<hana::integral_constant<int, 476>,Vector> m476;
+    hana::pair<hana::integral_constant<int, 477>,Vector> m477;
+    hana::pair<hana::integral_constant<int, 478>,Vector> m478;
+    hana::pair<hana::integral_constant<int, 479>,Vector> m479;
+    hana::pair<hana::integral_constant<int, 480>,Vector> m480;
+    hana::pair<hana::integral_constant<int, 481>,Vector> m481;
+    hana::pair<hana::integral_constant<int, 482>,Vector> m482;
+    hana::pair<hana::integral_constant<int, 483>,Vector> m483;
+    hana::pair<hana::integral_constant<int, 484>,Vector> m484;
+    hana::pair<hana::integral_constant<int, 485>,Vector> m485;
+    hana::pair<hana::integral_constant<int, 486>,Vector> m486;
+    hana::pair<hana::integral_constant<int, 487>,Vector> m487;
+    hana::pair<hana::integral_constant<int, 488>,Vector> m488;
+    hana::pair<hana::integral_constant<int, 489>,Vector> m489;
+    hana::pair<hana::integral_constant<int, 490>,Vector> m490;
+    hana::pair<hana::integral_constant<int, 491>,Vector> m491;
+    hana::pair<hana::integral_constant<int, 492>,Vector> m492;
+    hana::pair<hana::integral_constant<int, 493>,Vector> m493;
+    hana::pair<hana::integral_constant<int, 494>,Vector> m494;
+    hana::pair<hana::integral_constant<int, 495>,Vector> m495;
+    hana::pair<hana::integral_constant<int, 496>,Vector> m496;
+    hana::pair<hana::integral_constant<int, 497>,Vector> m497;
+    hana::pair<hana::integral_constant<int, 498>,Vector> m498;
+    hana::pair<hana::integral_constant<int, 499>,Vector> m499;
+};
+
+template <int n>
+auto f() {
+    return Foo{};
+}
+
+#elif defined(USE_ARRAY)
+
+template <int n>
+auto f() {
+    std::array<Vector, n> arr{};
+    return arr;
+}
+
+#elif defined(USE_RAW_STORAGE)
+
+#include "../experimental/heterogeneous_storage.hpp"
+
+
+template <typename ...T>
+hana::heterogeneous_storage<typename std::decay<T>::type...> make_heterogeneous_storage(T&& ...t) {
+    return hana::heterogeneous_storage<typename std::decay<T>::type...>{static_cast<T&&>(t)...};
+}
+
+template <int i>
+auto f() {
+    using Storage = decltype(
+        hana::unpack(hana::range_c<int, 0, i>, [](auto ...x) {
+            return make_heterogeneous_storage(hana::make_pair(x, Vector{})...);
+        })
+    );
+
+    return Storage{};
+}
+
+
+#endif
+
+#include <iostream>
+
+// export DEFINE=USE_RAW_STORAGE
+// time clang++-3.6 -std=c++14 -I include -Os comparison.cpp -D ${DEFINE} -o raw_storage
+// stat raw_storage && nm -a raw_storage
+// strip -u raw_storage
+// stat raw_storage && nm -a raw_storage
+// rm raw_storage
+
+int main() {
+    std::cout << sizeof(f<500>()) << std::endl;
+    auto result = f<500>();
+}
