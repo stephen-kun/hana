@@ -1,0 +1,29 @@
+
+
+{
+  "title": {
+    "text": "Executable size for count_if"
+  },
+  "yAxis": {
+    "title": {
+      "text": "Executable size (kb)"
+    },
+    "floor": 0
+  },
+  "tooltip": {
+    "valueSuffix": "kb"
+  },
+  "series": [
+    {
+      "name": "hana::tuple",
+      "data": [[1, 91.339], [11, 108.457], [21, 129.835], [31, 151.189], [41, 172.569]]
+    }
+
+    
+    , {
+      "name": "fusion::vector",
+      "data": [[1, 94.542], [11, 179.081], [21, 284.658], [31, 412.473], [41, 561.61]]
+    }
+    
+  ]
+}
