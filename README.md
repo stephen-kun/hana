@@ -25,4 +25,4 @@ The `debug` and `release` directories represent the type of the CMake build
 under which the benchmarks were generated. The `compilerN` subdirectories
 correspond to the compiler used to build the benchmarks.
 
-[Hana]: http://github.com/ldionne/hana
+[Hana]: https://github.com/boostorg/hana
