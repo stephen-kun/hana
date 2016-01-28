@@ -31,7 +31,6 @@ include(CheckCxxCompilerSupport)
 # Setup CMake options
 ##############################################################################
 option(BOOST_HANA_ENABLE_WERROR   "Fail and stop if a warning is triggered." OFF)
-option(BOOST_HANA_ENABLE_MEMCHECK "Run the unit tests and examples under Valgrind if it is found." OFF)
 option(BOOST_HANA_ENABLE_CONCEPT_CHECKS "Enable concept checking in the interface methods." ON)
 option(BOOST_HANA_ENABLE_DEBUG_MODE "Enable Hana's debug mode." OFF)
 
@@ -43,6 +42,10 @@ option(BOOST_HANA_ENABLE_EXCEPTIONS
 "Build with exceptions enabled. Note that Hana does not make use of exceptions,\
  but this switch can be disabled when building the tests to assess that it is\
  really the case." ON)
+
+option(BOOST_HANA_ENABLE_SANITIZERS
+"Build with support for various sanitizers.\
+ Also runs the unit tests and examples under Valgrind if it can be found." OFF)
 
 
 ##############################################################################
@@ -82,6 +85,26 @@ endif()
 
 if (NOT BOOST_HANA_ENABLE_EXCEPTIONS)
     boost_hana_append_flag(BOOST_HANA_HAS_FNO_EXCEPTIONS -fno-exceptions)
+endif()
+
+if (BOOST_HANA_ENABLE_SANITIZERS)
+    boost_hana_append_flag(BOOST_HANA_HAS_FSANITIZE_ADDRESS     -fsanitize=address)
+    boost_hana_append_flag(BOOST_HANA_HAS_FSANITIZE_MEMORY      -fsanitize=memory)
+    boost_hana_append_flag(BOOST_HANA_HAS_FSANITIZE_SAFE_STACK  -fsanitize=safe-stack)
+    boost_hana_append_flag(BOOST_HANA_HAS_FSANITIZE_UNDEFINED   -fsanitize=undefined)
+
+    if(BOOST_HANA_HAS_FSANITIZE_ADDRESS)
+        list(APPEND CMAKE_EXE_LINKER_FLAGS "-fsanitize=address")
+    endif()
+    if(BOOST_HANA_HAS_FSANITIZE_MEMORY)
+        list(APPEND CMAKE_EXE_LINKER_FLAGS "-fsanitize=memory")
+    endif()
+    if(BOOST_HANA_HAS_FSANITIZE_SAFE_STACK)
+        list(APPEND CMAKE_EXE_LINKER_FLAGS "-fsanitize=safe-stack")
+    endif()
+    if (BOOST_HANA_HAS_FSANITIZE_UNDEFINED)
+        list(APPEND CMAKE_EXE_LINKER_FLAGS "-fsanitize=undefined")
+    endif()
 endif()
 
 # Other compiler flags
@@ -139,10 +162,11 @@ endfunction()
 #   boost_hana_add_test(<name> <command> [<arg>...])
 #
 # Creates a test called `name`, which runs the given `command` with the given
-# `arg`uments. However, if `BOOST_HANA_ENABLE_MEMCHECK` is set to `ON`, the
-# test will run the provided command under the memory checker.
-if (BOOST_HANA_ENABLE_MEMCHECK)
-    find_package(Valgrind REQUIRED)
+# `arg`uments. However, if `BOOST_HANA_ENABLE_SANITIZERS` is set to `ON` and
+# Valgrind can be found, the test will run the provided command under the
+# memory checker.
+find_package(Valgrind)
+if (BOOST_HANA_ENABLE_SANITIZERS AND ${Valgrind_FOUND})
     function(boost_hana_add_test name)
         add_test(${name} ${Valgrind_EXECUTABLE} --leak-check=full --error-exitcode=1 ${ARGN})
     endfunction()

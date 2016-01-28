@@ -65,22 +65,22 @@ matrix:
 
     # Clang 3.6
     - os: linux
-      env: UNIT_TESTS=true LLVM_VERSION=3.6.2 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+      env: UNIT_TESTS=true LLVM_VERSION=3.6.2 BOOST_VERSION=default ENABLE_SANITIZERS=true
       compiler: clang
 
     # Clang 3.7
     - os: linux
-      env: UNIT_TESTS=true LLVM_VERSION=3.7.1 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+      env: UNIT_TESTS=true LLVM_VERSION=3.7.1 BOOST_VERSION=default ENABLE_SANITIZERS=true
       compiler: clang
 
     # Clang 3.8
     - os: linux
-      env: UNIT_TESTS=true LLVM_VERSION=3.8.0 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+      env: UNIT_TESTS=true LLVM_VERSION=3.8.0 BOOST_VERSION=default ENABLE_SANITIZERS=true
       compiler: clang
 
     # GCC 6
     - os: linux
-      env: UNIT_TESTS=true COMPILER=g++-6     BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+      env: UNIT_TESTS=true COMPILER=g++-6     BOOST_VERSION=default ENABLE_SANITIZERS=true
       compiler: gcc
 
     # Xcode 6.3
@@ -307,6 +307,8 @@ before_script:
   # Go back to the root of the project and setup the build directory
   ############################################################################
   - cd ${TRAVIS_BUILD_DIR}
+  - if [ "${ENABLE_SANITIZERS}" == "true" && "${LLVM_VERSION}" != "" ]; then export CXXFLAGS="${CXXFLAGS} -fsanitize=address,undefined,integer -fno-omit-frame-pointer"; fi
+  - if [ "${ENABLE_SANITIZERS}" == "true" ]; then CMAKE_OPTIONS+=" -DBOOST_HANA_ENABLE_SANITIZERS=ON"; fi
   - (mkdir build && cd build && cmake .. -DBOOST_HANA_ENABLE_WERROR=ON ${CMAKE_OPTIONS})
 
 
