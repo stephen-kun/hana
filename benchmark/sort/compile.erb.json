@@ -1,5 +1,5 @@
 <%
-  hana = (0...50).step(5).to_a + (50..200).step(25).to_a
+  hana = (0...50).step(5).to_a + (50..500).step(25).to_a
   mpl = hana
 %>
 
@@ -9,15 +9,11 @@
   },
   "series": [
     {
+      "name": "hana::tuple (brigand sort)",
+      "data": <%= time_compilation('compile.hana.tuple.brigand_sort.erb.cpp', hana) %>
+    }, {
       "name": "hana::tuple",
       "data": <%= time_compilation('compile.hana.tuple.erb.cpp', hana) %>
     }
-
-    <% if cmake_bool("@Boost_FOUND@") %>
-    , {
-      "name": "mpl::vector ",
-      "data": <%= time_compilation('compile.mpl.vector.erb.cpp', mpl) %>
-    }
-    <% end %>
   ]
 }
