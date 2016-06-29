@@ -175,10 +175,14 @@ matrix:
     # Jobs that are allowed to fail
     ##########################################################################
     # Clang trunk
-    # TODO: Find a way to download pre-built Clang trunk and enable this
-    # - os: linux
-    #   env: UNIT_TESTS=true LLVM_VERSION=trunk BOOST_VERSION=default
-    #   compiler: clang
+    - os: linux
+      env: UNIT_TESTS=true COMPILER=clang++-3.9 LLVM_VERSION=trunk BOOST_VERSION=default
+      addons:
+        apt:
+          packages:
+            - clang-3.9
+          sources:
+            - llvm-toolchain-precise
 
     # Boost trunk
     - os: linux
