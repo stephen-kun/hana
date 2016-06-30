@@ -60,8 +60,9 @@ matrix:
     # speed up Travis builds.
     ##########################################################################
     # Clang 3.5
-    # TODO: Find out why this fails to compile the test suite.
-    # - env: UNIT_TESTS=true LLVM_VERSION=3.5.2 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+    - os: linux
+      env: UNIT_TESTS=true COMPILER=clang++-3.5 LLVM_VERSION=3.5.2 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+      addons: { apt: { packages: ["clang-3.5", "valgrind"], sources: ["llvm-toolchain-precise-3.5", "ubuntu-toolchain-r-test"] } }
 
     # Clang 3.6
     - os: linux
