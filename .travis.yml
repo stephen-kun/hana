@@ -23,11 +23,11 @@ env:
     - TRAVIS_EMPTY_JOB_WORKAROUND=true
 
 
-cache:
-  directories:
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.6.2
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.7.1
-    - ${TRAVIS_BUILD_DIR}/deps/llvm-3.8.0
+# cache:
+#   directories:
+#     - ${TRAVIS_BUILD_DIR}/deps/llvm-3.6.2
+#     - ${TRAVIS_BUILD_DIR}/deps/llvm-3.7.1
+#     - ${TRAVIS_BUILD_DIR}/deps/llvm-3.8.0
 
 
 matrix:
@@ -242,7 +242,7 @@ install:
   - LLVM_DIR=${DEPS_DIR}/llvm-${LLVM_VERSION}
   - |
     if [[ "${LLVM_VERSION}" != "" ]]; then
-      if [[ -z "$(ls -A ${LLVM_DIR})" ]]; then
+      if [[ true ]]; then
         LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz"
         LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"
         LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}.src.tar.xz"
