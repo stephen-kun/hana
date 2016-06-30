@@ -23,15 +23,6 @@ env:
     - TRAVIS_EMPTY_JOB_WORKAROUND=true
 
 
-addons:
-  apt:
-    packages:
-      - valgrind
-      - g++-6
-    sources: &sources
-      - ubuntu-toolchain-r-test
-
-
 cache:
   directories:
     - ${TRAVIS_BUILD_DIR}/deps/llvm-3.6.2
@@ -58,28 +49,32 @@ matrix:
     # speed up Travis builds.
     ##########################################################################
     # Clang 3.5
-    # TODO: Find out why this fails to compile the test suite.
-    # - env: UNIT_TESTS=true LLVM_VERSION=3.5.2 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+    - os: linux
+      env: UNIT_TESTS=true COMPILER=clang++-3.5 LLVM_VERSION=3.5.2 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+      addons: { apt: { packages: ["clang-3.5", "valgrind"], sources: ["llvm-toolchain-precise-3.5", "ubuntu-toolchain-r-test"] } }
 
     # Clang 3.6
     - os: linux
       env: UNIT_TESTS=true LLVM_VERSION=3.6.2 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+      addons: { apt: { packages: ["valgrind"], sources: ["ubuntu-toolchain-r-test"] } }
       compiler: clang
 
     # Clang 3.7
     - os: linux
       env: UNIT_TESTS=true LLVM_VERSION=3.7.1 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+      addons: { apt: { packages: ["valgrind"], sources: ["ubuntu-toolchain-r-test"] } }
       compiler: clang
 
     # Clang 3.8
     - os: linux
       env: UNIT_TESTS=true LLVM_VERSION=3.8.0 BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
+      addons: { apt: { packages: ["valgrind"], sources: ["ubuntu-toolchain-r-test"] } }
       compiler: clang
 
     # GCC 6
     - os: linux
       env: UNIT_TESTS=true COMPILER=g++-6     BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_MEMCHECK=ON"
-      compiler: gcc
+      addons: { apt: { packages: ["g++-6", "valgrind"], sources: ["ubuntu-toolchain-r-test"] } }
 
     # Xcode 6.3
     - os: osx
