@@ -23,15 +23,6 @@ env:
     - TRAVIS_EMPTY_JOB_WORKAROUND=true
 
 
-addons:
-  apt:
-    packages:
-      - valgrind
-      - g++-6
-    sources: &sources
-      - ubuntu-toolchain-r-test
-
-
 cache:
   directories:
     - ${TRAVIS_BUILD_DIR}/deps/llvm-3.6.2
@@ -52,12 +43,8 @@ matrix:
     # Clang trunk
     - os: linux
       env: UNIT_TESTS=true COMPILER=clang++-3.9 LLVM_VERSION=trunk BOOST_VERSION=default
-      addons:
-        apt:
-          packages:
-            - clang-3.9
-          sources:
-            - llvm-toolchain-precise
+      addons: { apt: { packages: ["clang-3.9"], sources: ["llvm-toolchain-precise", "ubuntu-toolchain-r-test"] } }
+
 
 install:
   ############################################################################
