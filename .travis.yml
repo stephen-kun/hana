@@ -109,16 +109,26 @@ install:
     if [[ "${LLVM_VERSION}" != "" ]]; then
       LLVM_DIR=${DEPS_DIR}/llvm-${LLVM_VERSION}
       if [[ -z "$(ls -A ${LLVM_DIR})" ]]; then
-        LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz"
-        LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"
-        LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}.src.tar.xz"
-        CLANG_URL="http://llvm.org/releases/${LLVM_VERSION}/clang+llvm-${LLVM_VERSION}-x86_64-linux-gnu-ubuntu-14.04.tar.xz"
+        if [[ "${LLVM_VERSION}" == "trunk" ]]; then
+          LLVM_URL="https://github.com/llvm-mirror/llvm/archive/master.tar.gz"
+          LIBCXX_URL="https://github.com/llvm-mirror/libcxx/archive/master.tar.gz"
+          LIBCXXABI_URL="https://github.com/llvm-mirror/libcxxabi/archive/master.tar.gz"
+          # TODO: Do not download this when asking for trunk.
+          CLANG_URL="https://github.com/llvm-mirror/clang/archive/master.tar.gz"
+          TAR_FLAGS="-xz"
+        else
+          LLVM_URL="http://llvm.org/releases/${LLVM_VERSION}/llvm-${LLVM_VERSION}.src.tar.xz"
+          LIBCXX_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxx-${LLVM_VERSION}.src.tar.xz"
+          LIBCXXABI_URL="http://llvm.org/releases/${LLVM_VERSION}/libcxxabi-${LLVM_VERSION}.src.tar.xz"
+          CLANG_URL="http://llvm.org/releases/${LLVM_VERSION}/clang+llvm-${LLVM_VERSION}-x86_64-linux-gnu-ubuntu-14.04.tar.xz"
+          TAR_FLAGS="-xJ"
+        fi
 
         mkdir -p ${LLVM_DIR} ${LLVM_DIR}/build ${LLVM_DIR}/projects/libcxx ${LLVM_DIR}/projects/libcxxabi ${LLVM_DIR}/clang
-        travis_retry wget --quiet -O - ${LLVM_URL}      | tar --strip-components=1 -xJ -C ${LLVM_DIR}
-        travis_retry wget --quiet -O - ${LIBCXX_URL}    | tar --strip-components=1 -xJ -C ${LLVM_DIR}/projects/libcxx
-        travis_retry wget --quiet -O - ${LIBCXXABI_URL} | tar --strip-components=1 -xJ -C ${LLVM_DIR}/projects/libcxxabi
-        travis_retry wget --quiet -O - ${CLANG_URL}     | tar --strip-components=1 -xJ -C ${LLVM_DIR}/clang
+        travis_retry wget --quiet -O - ${LLVM_URL}      | tar --strip-components=1 ${TAR_FLAGS} -C ${LLVM_DIR}
+        travis_retry wget --quiet -O - ${LIBCXX_URL}    | tar --strip-components=1 ${TAR_FLAGS} -C ${LLVM_DIR}/projects/libcxx
+        travis_retry wget --quiet -O - ${LIBCXXABI_URL} | tar --strip-components=1 ${TAR_FLAGS} -C ${LLVM_DIR}/projects/libcxxabi
+        travis_retry wget --quiet -O - ${CLANG_URL}     | tar --strip-components=1 ${TAR_FLAGS} -C ${LLVM_DIR}/clang
         (cd ${LLVM_DIR}/build && cmake .. -DCMAKE_INSTALL_PREFIX=${LLVM_DIR}/install -DCMAKE_CXX_COMPILER=clang++)
         (cd ${LLVM_DIR}/build/projects/libcxx && make install -j2)
         (cd ${LLVM_DIR}/build/projects/libcxxabi && make install -j2)
