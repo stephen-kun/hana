@@ -8,6 +8,7 @@
 #include <boost/hana/type.hpp>
 
 #include <sstream>
+#include <iostream>
 namespace hana = boost::hana;
 
 namespace foo {
@@ -22,6 +23,7 @@ int main() {
         ss << hana::experimental::print(
             hana::template_<foo::my_template>
         );
+        std::cout << ss.str() << std::endl;
         BOOST_HANA_RUNTIME_CHECK(ss.str() == "template<foo::my_template>");
     }
     {
@@ -29,6 +31,7 @@ int main() {
         ss << hana::experimental::print(
             hana::metafunction<foo::my_mf>
         );
+        std::cout << ss.str() << std::endl;
         BOOST_HANA_RUNTIME_CHECK(ss.str() == "metafunction<foo::my_mf>");
     }
     {
@@ -36,6 +39,7 @@ int main() {
         ss << hana::experimental::print(
             hana::metafunction_class<foo::my_mf_class>
         );
+        std::cout << ss.str() << std::endl;
         BOOST_HANA_RUNTIME_CHECK(ss.str() == "metafunction_class<foo::my_mf_class>");
     }
 }
