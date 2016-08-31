@@ -319,7 +319,7 @@ script:
   ############################################################################
   - |
     if [[ "${DOCUMENTATION}" == "true" && "${BOOST_BUILD}" != "true" ]]; then
-      (cd build && ! make doc 2>&1 | grep -E "warning|error") || exit 1
+      (! cmake --build build --target doc 2>&1 | grep -E "warning|error") || exit 1
 
       if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then
         # Suppress output to avoid leaking the token when the command fails
@@ -354,9 +354,9 @@ script:
   - |
     if [[ "${BENCHMARKS}" == "true" ]]; then
       if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then
-        (cd build && make benchmarks) || exit 1
-        compiler_slug=$(cd build && make travis_compiler_slug | grep 'travis_compiler_slug:' | cut -d ' ' -f 2)
-        config_slug=$(cd build && make travis_config_slug | grep 'travis_config_slug:' | cut -d ' ' -f 2)
+        cmake --build build --target benchmarks || exit 1
+        compiler_slug=$(cmake --build build --target travis_compiler_slug | grep 'travis_compiler_slug: ' | cut -d ' ' -f 2)
+        config_slug=$(cmake --build build --target travis_config_slug | grep 'travis_config_slug: ' | cut -d ' ' -f 2)
 
         # Suppress output to avoid leaking the token when the command fails
         git clone https://ldionne:${GITHUB_TOKEN}@github.com/boostorg/hana --depth 1 --branch=gh-pages doc/html &>/dev/null
@@ -374,7 +374,7 @@ script:
         popd
       else
         export BOOST_HANA_JUST_CHECK_BENCHMARKS=true
-        (cd build && make benchmarks -j2)
+        cmake --build build --target benchmarks
       fi
     fi
 
@@ -384,7 +384,7 @@ script:
   - |
     if [[ "${UNIT_TESTS}" == "true" && "${BOOST_BUILD}" != "true" ]]; then
       export CTEST_PARALLEL_LEVEL=2 # Run unit tests on two cores
-      (cd build && make check -j2 -k)
+      cmake --build build --target check -- -j2 -k
     fi
 
   - |
