@@ -111,11 +111,6 @@ matrix:
       env: UNIT_TESTS=true LLVM_VERSION=default BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_DEBUG_MODE=ON"
       compiler: clang
 
-    # Without exceptions
-    - os: linux
-      env: UNIT_TESTS=true LLVM_VERSION=default BOOST_VERSION=default CMAKE_OPTIONS="-DBOOST_HANA_ENABLE_EXCEPTIONS=OFF"
-      compiler: clang
-
     # With Boost 1.59
     - os: linux
       env: UNIT_TESTS=true LLVM_VERSION=default BOOST_VERSION=1.59.0
@@ -292,7 +287,7 @@ before_script:
   # Go back to the root of the project and setup the build directory
   ############################################################################
   - cd ${TRAVIS_BUILD_DIR}
-  - (mkdir build && cd build && cmake .. -DBOOST_HANA_ENABLE_WERROR=ON ${CMAKE_OPTIONS})
+  - (mkdir build && cd build && cmake .. ${CMAKE_OPTIONS})
 
 
 script:

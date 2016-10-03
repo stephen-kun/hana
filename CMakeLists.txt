@@ -2,7 +2,7 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 
@@ -20,17 +20,47 @@ foreach(level MAJOR MINOR PATCH)
     string(REGEX MATCH "([0-9]+)" _version_${level} "${_define_${level}}")
 endforeach()
 
-set(Boost.Hana_VERSION_STRING "${_version_MAJOR}.${_version_MINOR}.${_version_PATCH}")
-project(Boost.Hana VERSION ${Boost.Hana_VERSION_STRING} LANGUAGES CXX)
+set(BOOST_HANA_VERSION_STRING "${_version_MAJOR}.${_version_MINOR}.${_version_PATCH}")
+project(Boost.Hana VERSION ${BOOST_HANA_VERSION_STRING}
+                   LANGUAGES CXX)
 
 # Perform checks to make sure we support the current compiler
 include(CheckCxxCompilerSupport)
 
 
 ##############################################################################
-# Setup CMake options
+# Setup the 'hana' header-only library target.
 ##############################################################################
-option(BOOST_HANA_ENABLE_WERROR   "Fail and stop if a warning is triggered." OFF)
+add_library(hana INTERFACE)
+target_include_directories(hana INTERFACE include)
+
+# Look for Boost >= 1.59 and include its headers if found; external adapters
+# need this.
+find_package(Boost 1.59)
+if (Boost_FOUND)
+    target_include_directories(hana INTERFACE ${Boost_INCLUDE_DIRS})
+else()
+    message(WARNING
+        "The Boost library headers were not found; targets depending "
+        "on Boost won't be available.")
+endif()
+
+
+##############################################################################
+# Setup the 'install' target.
+# This copies the whole content of include/ to ${CMAKE_INSTALL_PREFIX}.
+##############################################################################
+install(DIRECTORY include/boost DESTINATION include
+        PATTERN ".DS_Store" EXCLUDE)
+
+# We also install an optional pkg-config file.
+configure_file(cmake/hana.pc.in hana.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/hana.pc DESTINATION lib/pkgconfig)
+
+
+##############################################################################
+# Setup CMake options that can be used when building the unit tests and examples
+##############################################################################
 option(BOOST_HANA_ENABLE_MEMCHECK "Run the unit tests and examples under Valgrind if it is found." OFF)
 option(BOOST_HANA_ENABLE_CONCEPT_CHECKS "Enable concept checking in the interface methods." ON)
 option(BOOST_HANA_ENABLE_DEBUG_MODE "Enable Hana's debug mode." OFF)
@@ -39,14 +69,9 @@ option(BOOST_HANA_ENABLE_STRING_UDL
 "Enable the GNU extension allowing the special string literal operator\
  template, which enables the _s suffix for creating compile-time strings." ON)
 
-option(BOOST_HANA_ENABLE_EXCEPTIONS
-"Build with exceptions enabled. Note that Hana does not make use of exceptions,\
- but this switch can be disabled when building the tests to assess that it is\
- really the case." ON)
-
 
 ##############################################################################
-# Setup compiler flags (more can be set on a per-target basis or in subdirectories)
+# Setup flags used when building the unit tests and examples
 ##############################################################################
 include(CheckCXXCompilerFlag)
 macro(boost_hana_append_flag testname flag)
@@ -55,12 +80,6 @@ macro(boost_hana_append_flag testname flag)
         add_compile_options(${flag})
     endif()
 endmacro()
-
-# Compiler flags controlled by CMake options above
-if (BOOST_HANA_ENABLE_WERROR)
-    boost_hana_append_flag(BOOST_HANA_HAS_WERROR -Werror)
-    boost_hana_append_flag(BOOST_HANA_HAS_WX -WX)
-endif()
 
 if (NOT BOOST_HANA_ENABLE_CONCEPT_CHECKS)
     add_definitions(-DBOOST_HANA_CONFIG_DISABLE_CONCEPT_CHECKS)
@@ -80,36 +99,17 @@ if (BOOST_HANA_ENABLE_STRING_UDL)
     endif()
 endif()
 
-if (NOT BOOST_HANA_ENABLE_EXCEPTIONS)
-    boost_hana_append_flag(BOOST_HANA_HAS_FNO_EXCEPTIONS -fno-exceptions)
-endif()
-
-# Other compiler flags
 boost_hana_append_flag(BOOST_HANA_HAS_FDIAGNOSTICS_COLOR         -fdiagnostics-color)
+boost_hana_append_flag(BOOST_HANA_HAS_FNO_EXCEPTIONS             -fno-exceptions)
 boost_hana_append_flag(BOOST_HANA_HAS_FTEMPLATE_BACKTRACE_LIMIT  -ftemplate-backtrace-limit=0)
 boost_hana_append_flag(BOOST_HANA_HAS_PEDANTIC                   -pedantic)
 boost_hana_append_flag(BOOST_HANA_HAS_STDCXX1Y                   -std=c++1y)
-boost_hana_append_flag(BOOST_HANA_HAS_QUNUSED_ARGUMENTS          -Qunused-arguments)
 boost_hana_append_flag(BOOST_HANA_HAS_W                          -W)
 boost_hana_append_flag(BOOST_HANA_HAS_WALL                       -Wall)
+boost_hana_append_flag(BOOST_HANA_HAS_WERROR                     -Werror)
 boost_hana_append_flag(BOOST_HANA_HAS_WEXTRA                     -Wextra)
 boost_hana_append_flag(BOOST_HANA_HAS_WNO_UNUSED_LOCAL_TYPEDEFS  -Wno-unused-local-typedefs)
 boost_hana_append_flag(BOOST_HANA_HAS_WWRITE_STRINGS             -Wwrite-strings)
-
-
-##############################################################################
-# Setup include paths. More include paths can be added in subdirectories.
-##############################################################################
-include_directories(${Boost.Hana_SOURCE_DIR}/include)
-
-find_package(Boost 1.59)
-if (Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-else()
-    message(WARNING
-        "The Boost library headers were not found; targets depending "
-        "on Boost won't be available.")
-endif()
 
 
 ##############################################################################
@@ -171,15 +171,3 @@ add_subdirectory(doc)
 add_subdirectory(example)
 add_subdirectory(experimental)
 add_subdirectory(test)
-
-
-##############################################################################
-# Setup the 'install' target.
-# This copies the whole content of include/ to ${CMAKE_INSTALL_PREFIX}.
-##############################################################################
-install(DIRECTORY include/boost DESTINATION include
-        PATTERN ".DS_Store" EXCLUDE)
-
-# We also install an optional pkg-config file.
-configure_file(cmake/hana.pc.in hana.pc @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/hana.pc DESTINATION lib/pkgconfig)
